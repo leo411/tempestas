@@ -1,0 +1,87 @@
+type Query {
+  testField: String
+  # BOM data returns a shaped dataset from the BOM JSON.
+  # Example source: <http://www.bom.gov.au/fwo/IDN60901/IDN60901.94768.json>
+  # Weather Undeground returns another shaped dataset from WU data.
+  # Ref: <https://www.wunderground.com/>
+  # OpenWeatherMap retusn another shaped dataset from the OWM data.
+  # Ref: <https://openweathermap.org/>
+  meteorology(id: ID!, source: string!): ObservationSet
+}
+
+type GPS {
+  latitude: Float
+  longitude: Float
+}
+
+type ObservationSet {
+  header: ObservationHeader
+  data: [ObservationDatum]
+}
+
+type ObservationHeader {
+  site: ObservationSite!
+  start: DateTime
+  finish: DateTime
+}
+
+type ObservationSite {
+  id: ID!
+  name: String!
+  worldMeteorologicalOrganizationId: ID!
+  gps: GPS
+}
+
+type ObservationDatum {
+  start: DateTime!
+  finish: DateTime!
+
+  # Temperature
+  temperatureApparent: Float
+  temperatureAir: Float
+  temperatureDew: Float
+  temperatureDelta: Float
+
+  # Humidity
+  relativeHumidity: Float
+
+  # Pressure
+  pressure: Float
+  pressureMeanSeaLevel: Float
+  # pressureTending: ???
+
+  # Wind
+  windDirection: String
+  windSpeed: Float # Use km/h. Apply maths for other speeds.
+  windSpeedGust: Float # Use km/h. Apply maths for other speeds.
+
+  # Visibility
+  # Check WU and OWM for how they do cloud.
+
+  # "vis_km": "-",
+  # "cloud": "-",
+  # "cloud_base_m": null,
+  # "cloud_oktas": null,
+  # "cloud_type_id": null,
+  # "cloud_type": "-",
+  
+  # "gust_kmh": null,
+  # "gust_kt": null,
+  # "wind_dir": "SSW",
+  # "wind_spd_kmh": 26,
+  # "wind_spd_kt": 14
+
+  # "press": 1021.8,
+  # "press_qnh": 1021.8,
+  # "press_msl": 1021.8,
+  # "press_tend": "-",
+  
+  # "rain_trace": "0.0",
+
+  # "sea_state": "-",
+  # "swell_dir_worded": "-",
+  # "swell_height": null,
+  # "swell_period": null,
+  
+  # "weather": "-",
+} 
