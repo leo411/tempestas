@@ -15,14 +15,22 @@ type GPS {
 }
 
 type ObservationSet {
-  header: ObservationHeader
+  notice: [Notice]
+  header: [ObservationHeader]
   data: [ObservationDatum]
 }
 
+type Notice {
+  copyright: String
+  copyrightUrl: String
+  disclaimerUrl: String
+  feedbackUrl: String
+}
+
 type ObservationHeader {
-  site: ObservationSite!
-  start: DateTime
-  finish: DateTime
+  name: String!
+  state: String!
+  refreshMessage: String!
 }
 
 type ObservationSite {

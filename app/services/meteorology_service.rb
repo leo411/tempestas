@@ -1,10 +1,10 @@
 module MeteorologyService
-  BOM_BASE_URL = 'https://bom.gov.au/fwo'.freeze
+  BOM_BASE_URL = 'https://reg.bom.gov.au/fwo'.freeze
 
   # General request to retrieve a meteorology report for id, given a source.
   # 
   # @return [MeteorologyService::Report]
-  def retrieve_report(id:, source:)
+  def self.retrieve_report(id:, source:)
     case source
     when 'bom'
       retrieve_au_bom_report(id: id)
@@ -21,14 +21,12 @@ module MeteorologyService
   # 
   # @param [String] id
   # @return [MeteorologicalService::Report]
-  def retrieve_au_bom_report(id:)
+  def self.retrieve_au_bom_report(id:)
     (bom_id, wmo_id) = id.split('.')
     
     uri = URI("#{BOM_BASE_URL}/#{bom_id}/#{bom_id}.#{wmo_id}.json")
     response = Net::HTTP.get(uri)
-
     # Do stuff here *or* in a subclass dedicated to transforming BOM JSON to MeteorologyService::Report.
-    puts JSON.parse(response)
 
     response
   end
